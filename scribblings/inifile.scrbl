@@ -14,3 +14,9 @@
             (link x x)).})
 
 The @racket[inifile] library is a library to access inifiles.
+
+@section{Reference}
+@defmodule[inifile]
+
+@defproc[(read-inifile [inp input-port? (current-input-port)])
+         (hash/c string? (hash/c string? string?))]

@@ -12,4 +12,11 @@
         (define-values (key value) (read-ini-property inp values))
         (check-equal? key "export")
         (check-equal? value "system"))))
+
+  (test-case "read-property space after key"
+    (call-with-input-string "export = system"
+      (λ (inp)
+        (define-values (key value) (read-ini-property inp values))
+        (check-equal? key "export")
+        (check-equal? value "system"))))
 )

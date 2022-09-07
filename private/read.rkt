@@ -24,7 +24,7 @@
 (define (read-ini-property inp handler)
   (match (read-line inp)
     ;; XXX handle line continuations
-    [(regexp #px"([^=]+)\\s*=\\s*(.*)" (list _ key value)) (handler key value)]
+    [(regexp #px"([^=\\s]+)\\s*=\\s*(.*)" (list _ key value)) (handler key value)]
     [line (error 'read-ini-property
                  "expected property got: ~s" line)]))
 

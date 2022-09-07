@@ -10,8 +10,7 @@
                                 (-> string? string? any)
                                 (-> any))
                                any)]
-           [read-inifile (->* () (input-port?) hash?)]
-                               ))
+           [read-inifile (->* () (input-port?) hash?)]))
 
 ; XXX make an inifile writer
 

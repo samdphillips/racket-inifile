@@ -26,3 +26,10 @@ The @racket[inifile] library is a library to access inifiles.
                         [on-property (-> string? string? any) values]
                         [on-eof      (-> any)                 (λ () eof)])
          any]
+
+@defproc[(read-inifile-fold [inp         input-port?]
+                            [seed        any/c]
+                            [on-section  (-> any/c string? any)]
+                            [on-property (-> any/c string? string? any)]
+                            [on-eof      (-> any/c any)])
+         any]

@@ -3,6 +3,7 @@
 (require racket/match)
 
 (provide read-inifile
+         read-inifile-fold
          read-ini-line
          read-ini-property)
 

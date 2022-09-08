@@ -10,6 +10,12 @@
                                 (-> string? string? any)
                                 (-> any))
                                any)]
+           [read-inifile-fold (-> input-port?
+                                  any/c
+                                  (-> any/c string? any)
+                                  (-> any/c string? string? any)
+                                  (-> any/c any)
+                                  any)]
            [read-inifile (->* () (input-port?) hash?)]))
 
 ; XXX make an inifile writer

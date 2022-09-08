@@ -1,6 +1,8 @@
 #lang racket/base
 
-(require racket/match)
+(require racket/match
+         (only-in racket/unsafe/ops
+                  [unsafe-string->immutable-string! imm-string]))
 
 (provide read-inifile
          read-inifile-fold
@@ -53,18 +55,24 @@
 (struct inifile-hash-builder (current-section current-properties table))
 
 (define (read-inifile [inp (current-input-port)])
-  (define (on-section b section-name)
+  (define (on-section b section-name0)
+    (define section-name (imm-string section-name0))
     (match b
       [(inifile-hash-builder #f _ tbl)
        (inifile-hash-builder section-name (hash) tbl)]
       [(inifile-hash-builder old props tbl)
        (inifile-hash-builder section-name (hash)
                              (hash-set tbl old props))]))
-  (define (on-property b key value)
+  (define (on-property b key0 value0)
+    (define key (imm-string key0))
+    (define value (imm-string value0))
     (match b
       [(inifile-hash-builder section props tbl)
        (inifile-hash-builder section (hash-set props key value) tbl)]))
   (define (on-eof b)
-    (inifile-hash-builder-table (on-section b #f)))
+    (match b 
+      [(inifile-hash-builder #f _ tbl) tbl]
+      [(inifile-hash-builder section-name props tbl)
+       (hash-set tbl section-name props)]))
   (define init-b (inifile-hash-builder #f (hash) (hash)))
   (read-inifile-fold inp init-b on-section on-property on-eof))

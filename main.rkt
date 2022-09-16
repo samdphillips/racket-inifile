@@ -1,6 +1,7 @@
 #lang racket/base
 
 (require inifile/private/read
+         inifile/private/write
          racket/contract)
 
 (provide (contract-out
@@ -16,7 +17,6 @@
                                   (-> any/c string? string? any)
                                   (-> any/c any)
                                   any)]
-           [read-inifile (->* () (input-port?) hash?)]))
-
-; XXX make an inifile writer
-
+           [read-inifile (->* () (input-port?) hash?)]
+           [write-inifile (->* ((hash/c string? (hash/c string? string?)))
+                               (output-port?) any)]))
